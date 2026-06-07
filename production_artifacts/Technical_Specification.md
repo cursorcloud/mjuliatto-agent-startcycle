@@ -1,12 +1,12 @@
-# Especificação Técnica: Chat de Suporte, Jogo da Velha e Calculadora Estilo iPhone
+# Especificação Técnica: Chat, Jogos, Calculadora e Quadro Kanban Premium
 
-Este documento detalha a arquitetura, requisitos e a implementação para a inclusão de uma nova funcionalidade de **Calculadora Simples** inspirada no design clássico do iPhone, integrada com a aplicação AuraTech existente.
+Este documento detalha a arquitetura, requisitos e a implementação para a inclusão da funcionalidade **Quadro Kanban**, inspirada no sistema de design e na paleta de cores do site do Claude Code (Anthropic).
 
 ---
 
 ## 1. Sumário Executivo
 
-A plataforma AuraTech será estendida com uma **Calculadora Simples** baseada no aplicativo nativo do iOS/iPhone. A funcionalidade será acessível através de um link na página principal (`index.html`). O design da calculadora adotará a interface icônica da Apple: botões redondos, fundo preto, display com fonte responsiva, e as cores originais da marca (laranja para operadores, cinza claro para funções de limpeza, e cinza escuro para numerais).
+A plataforma AuraTech será expandida com um **Quadro Kanban** interativo para gerenciamento de fluxo de trabalho. A funcionalidade será acessível a partir da página principal (`index.html`) e utilizará a identidade visual refinada do site do Claude Code: fundos creme claro, tipografia dividida entre fontes sem serifa modernas e fontes serifadas clássicas, e acentos em terracota/laranja, verde sálvia e azul acinzentado. O sistema permitirá arrastar e soltar (drag and drop) cartões entre quatro colunas, comemorar tarefas concluídas com chuva de confetes e alternar dinamicamente para uma exibição em formato de Lista de Tarefas Pendentes (excluindo as concluídas).
 
 ---
 
@@ -15,51 +15,69 @@ A plataforma AuraTech será estendida com uma **Calculadora Simples** baseada no
 ### 2.1 Requisitos Funcionais
 
 #### Integração na Página Principal (`index.html`):
-- **Link de Acesso:** Adicionar um link/botão elegante na barra de navegação principal e na seção correspondente para abrir a calculadora (`calculator.html`).
+- **Link de Acesso:** Adicionar um atalho de navegação no cabeçalho e um card na seção "Interactive Utilities" para o Quadro Kanban (`kanban.html`).
 
-#### Tela da Calculadora (`calculator.html`):
-- **Design de Interface (Estilo iPhone):**
-  - Fundo escuro profundo (`#000000` ou cinza escuro com efeito de vidro).
-  - Display digital no topo exibindo o número atual, com tamanho de fonte dinâmico (diminui à medida que o número cresce, igual ao iOS).
-  - Grade de botões redondos perfeitamente dispostos (padrão 4x5).
-- **Esquema de Cores dos Botões (iOS Palette):**
-  - **Operadores (Laranja - `#FF9F0A`):** Divisão (`÷`), Multiplicação (`×`), Subtração (`-`), Adição (`+`) e Igual (`=`).
-  - **Funções Especiais (Cinza Claro - `#A5A5A5` com texto escuro):** Limpar (`AC` / `C`), Inverter Sinal (`+/-`) e Porcentagem (`%`).
-  - **Numerais e Ponto (Cinza Escuro - `#333333`):** Números de `0` a `9` e o ponto decimal (`.`). O botão `0` é alongado horizontalmente, cobrindo duas colunas.
-- **Mecânica da Calculadora:**
-  - Operações básicas (soma, subtração, multiplicação e divisão).
-  - Cálculo de porcentagem (`%`).
-  - Alternância de sinal positivo/negativo (`+/-`).
-  - Botão de limpar (alterna dinamicamente entre `AC` quando zerado e `C` quando há números digitados).
-  - Limite de caracteres no display para evitar overflow visual, com arredondamento preciso para números flutuantes.
+#### Tela do Quadro Kanban (`kanban.html`):
+- **Visualização em Quadro (Kanban View):**
+  - Quatro colunas dispostas lado a lado de forma responsiva:
+    1. **Funnel** (Funil / Ideias)
+    2. **To Do** (A Fazer)
+    3. **Doing** (Em Progresso)
+    4. **Done** (Concluído)
+  - Suporte completo a **arrastar e soltar (Drag and Drop)** nativo do HTML5.
+  - Efeito visual de destaque (hover) ao arrastar um cartão sobre uma coluna válida.
+  - **Chuva de Confetes:** Ao mover qualquer item para a última coluna (**Done**), o sistema dispara uma chuva de confetes (`canvas-confetti`) para comemorar.
+- **Visualização em Lista (List View):**
+  - Exibe todos os itens cujo status é **diferente de Done** (não encerrados) em formato de lista/tabela limpa.
+  - Permite visualizar rapidamente ID, Título, Categoria, Tags e Status.
+- **Alternância de Visualização (Toggle View):**
+  - Um botão de controle de visualização no cabeçalho permite alternar instantaneamente entre a visualização de **Quadro Kanban** e a **Lista de Pendentes** sem perder dados.
+- **Criação de Itens (Workitems):**
+  - Botão "Add Workitem" que abre um modal para inserir:
+    - **Título** (Texto)
+    - **Categoria** (Seleção: Feature, Bug, Docs, Design, etc.)
+    - **Tags** (Lista flexível de palavras-chave inseridas por vírgula)
+    - **Status Inicial** (Dropdown com as opções Funnel, To Do, Doing)
+  - Cada item gerado recebe automaticamente um **ID sequencial único** (ex: `K-1`, `K-2`).
+- **Persistência de Dados (Local):**
+  - Utilização de `localStorage` no navegador para salvar e carregar os cartões criados e suas posições, para que o progresso não seja perdido ao recarregar a página.
 
 ### 2.2 Requisitos Não Funcionais
-- **Responsividade:** O teclado da calculadora deve caber perfeitamente em telas móveis e desktop, simulando o formato e proporção de um iPhone.
-- **Acessibilidade:** Suporte a teclas numéricas e operadores do teclado físico do computador para digitação facilitada.
-- **Design Estético Premium:** Sombras internas nos botões ao clicar (active states), transições suaves e cantos arredondados.
+- **Paleta de Cores (Estilo Claude Code):**
+  - **Fundo Base:** Creme suave (`#faf9f5`)
+  - **Texto Principal:** Carvão escuro (`#141413`)
+  - **Bordas e Linhas:** Cinza claro acinzentado (`#e8e6dc`)
+  - **Cor de Destaque 1 (Laranja/Terracota):** `#d97757` (Usado para botões primários e marcações do To Do)
+  - **Cor de Destaque 2 (Azul Acinzentado):** `#6a9bcc` (Usado para informações, categorias e Doing)
+  - **Cor de Destaque 3 (Verde Sálvia):** `#788c5d` (Usado para o status Done e celebrações)
+- **Tipografia:**
+  - Títulos e Cabeçalhos: Fonte `Poppins` (Google Fonts) para um ar corporativo e moderno.
+  - Corpo de texto, formulários e descrições: Fonte serifada `Lora` (Google Fonts) ou fallback `Georgia`, imitando o estilo editorial e acadêmico da Anthropic.
+- **Responsividade:** Colunas de Kanban se organizam em grid vertical (1 coluna) em telas móveis e 4 colunas horizontais em telas largas.
 
 ---
 
 ## 3. Arquitetura e Stack Tecnológico
 
-Toda a lógica da calculadora rodará inteiramente no cliente (frontend), integrada na estrutura estática existente.
+A lógica de manipulação do Quadro Kanban e os dados do estado dos itens serão geridos inteiramente no lado do cliente (Client-Side).
 
 ### Tecnologias Utilizadas
-- **HTML5 Semântico:** Estruturação da calculadora utilizando tags de botão apropriadas.
-- **CSS3 Vanilla (Custom Properties):** Estilização baseada em variáveis de cores oficiais do iOS.
-- **JavaScript Vanilla (ES6+):** Lógica matemática e gerenciamento de display.
+- **HTML5 nativo** com APIs de Drag and Drop.
+- **CSS3 Vanilla** com variáveis baseadas na paleta do Claude.
+- **JavaScript ES6+** para estruturação dos cartões, persistência no `localStorage`, gerenciamento do modal e lógica de troca de visualização.
+- **canvas-confetti** carregado via CDN para a comemoração de tarefas concluídas.
 
 ### Estrutura de Arquivos Atualizada
 ```diff
  app_build/
  └── public/
-     ├── index.html          # Adicionado link para a Calculadora
-+    ├── calculator.html     # Nova interface da Calculadora
+     ├── index.html          # Adicionado link para o Kanban
++    ├── kanban.html         # Nova interface do Quadro Kanban
      ├── css/
      │   ├── style.css
-+    │   └── calculator.css  # Estilo específico simulando o iPhone
++    │   └── kanban.css      # Estilos com fontes Lora/Poppins e paleta Claude
      └── js/
-+        └── calculator.js   # Lógica matemática e dinâmica de botões
++        └── kanban.js       # Controle de drag-and-drop, localStorage e toggle de telas
 ```
 
 ---
@@ -67,14 +85,11 @@ Toda a lógica da calculadora rodará inteiramente no cliente (frontend), integr
 ## 4. Plano de Verificação
 
 ### Testes Manuais
-1. **Navegação:** Clicar no link de Calculadora na página inicial e confirmar que ela abre.
-2. **Operações Básicas:**
-   - Testar `5 + 5 = 10`
-   - Testar `10 - 3.5 = 6.5`
-   - Testar `4 × 8 = 32`
-   - Testar `20 ÷ 4 = 5`
-3. **Funções Especiais:**
-   - Inserir um número e testar a tecla `%` (deve dividir por 100).
-   - Testar o botão `+/-` (deve inverter o sinal).
-   - Testar o botão `C` para limpar a entrada atual e `AC` para zerar o acumulador.
-4. **Layout:** Testar responsividade e o comportamento do botão "0" (que deve ocupar duas colunas).
+1. **Criação de Cards:** Clicar em "Add Workitem", preencher os campos do formulário e salvar. Verificar se o card aparece na coluna correta com ID gerado (`K-1`, `K-2`, etc.) e estilização correspondente.
+2. **Drag & Drop:**
+   - Arrastar um item de "Funnel" para "Doing".
+   - Arrastar um item de "Doing" para "Done" e validar se a animação de confetes é disparada imediatamente.
+   - Recarregar a página e garantir que a nova posição do card foi salva.
+3. **Alternância de Visualização (Toggle):**
+   - Mudar para a visualização de "Lista de Pendentes" e verificar se apenas os itens que *não* estão em "Done" são listados.
+   - Mudar de volta para o "Quadro Kanban" e checar se o layout volta ao normal com os cards nos mesmos locais.

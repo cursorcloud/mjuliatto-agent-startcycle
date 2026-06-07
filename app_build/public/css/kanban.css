@@ -1,0 +1,534 @@
+/* Claude Code Aesthetic Kanban CSS */
+
+:root {
+  --claude-bg: #faf9f5;
+  --claude-card: #ffffff;
+  --claude-text: #141413;
+  --claude-text-muted: #66645e;
+  --claude-border: #e8e6dc;
+  --claude-orange: #d97757;
+  --claude-orange-light: #fbece7;
+  --claude-blue: #6a9bcc;
+  --claude-blue-light: #f0f5fa;
+  --claude-green: #788c5d;
+  --claude-green-light: #f2f4f0;
+  --claude-grey: #b0aea5;
+}
+
+body {
+  background-color: var(--claude-bg);
+  color: var(--claude-text);
+  font-family: 'Lora', Georgia, serif;
+}
+
+.kanban-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Header & Controls */
+.kanban-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  border-bottom: 1.5px solid var(--claude-border);
+  padding-bottom: 1.5rem;
+}
+
+.kanban-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--claude-text);
+  margin-bottom: 0.25rem;
+}
+
+.kanban-subtitle {
+  color: var(--claude-text-muted);
+  font-size: 0.95rem;
+}
+
+.control-section {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Claude Style Buttons */
+.btn-primary.add-task-btn {
+  background-color: var(--claude-orange);
+  color: white;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.btn-primary.add-task-btn:hover {
+  background-color: oklch(0.53 0.16 34);
+  transform: translateY(-1px);
+}
+
+.btn-secondary.toggle-btn {
+  background-color: var(--claude-card);
+  color: var(--claude-text);
+  border: 1px solid var(--claude-border);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.btn-secondary.toggle-btn:hover {
+  background-color: var(--claude-bg);
+  border-color: var(--claude-grey);
+}
+
+/* --- KANBAN BOARD --- */
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.kanban-column {
+  background-color: #f3f1e9;
+  border: 1px solid var(--claude-border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.25rem 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 2px solid transparent;
+}
+
+.column-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--claude-text);
+}
+
+.column-count {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: var(--claude-border);
+  color: var(--claude-text-muted);
+  padding: 0.15rem 0.45rem;
+  border-radius: 12px;
+}
+
+/* Column Header Specific Color Accents */
+.col-funnel-header { border-bottom-color: var(--claude-grey); }
+.col-todo-header { border-bottom-color: var(--claude-orange); }
+.col-doing-header { border-bottom-color: var(--claude-blue); }
+.col-done-header { border-bottom-color: var(--claude-green); }
+
+/* Dropzones */
+.column-cards {
+  min-height: 550px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.25rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.column-cards.drag-over {
+  background-color: rgba(217, 119, 87, 0.05);
+  border: 1.5px dashed var(--claude-orange);
+}
+
+/* --- WORKITEM CARDS --- */
+.kanban-card {
+  background-color: var(--claude-card);
+  border: 1px solid var(--claude-border);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(20, 20, 19, 0.04);
+  cursor: grab;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  transition: transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.2s;
+}
+
+.kanban-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(20, 20, 19, 0.07);
+}
+
+.kanban-card:active {
+  cursor: grabbing;
+}
+
+.kanban-card.dragging {
+  opacity: 0.4;
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-id {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--claude-grey);
+  letter-spacing: 0.5px;
+}
+
+.delete-card-btn {
+  background: none;
+  border: none;
+  color: var(--claude-grey);
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.delete-card-btn:hover {
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.05);
+}
+
+.card-title {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--claude-text);
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+/* Category Badge styles */
+.badge-category {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.cat-feature { background-color: var(--claude-orange-light); color: var(--claude-orange); }
+.cat-bug { background-color: #fde8e8; color: #f05252; }
+.cat-docs { background-color: var(--claude-blue-light); color: var(--claude-blue); }
+.cat-design { background-color: #fdf6b2; color: #8e700f; }
+.cat-refactor { background-color: #f0eefc; color: #6c5ce7; }
+
+/* Tag Badge styles */
+.badge-tag {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 500;
+  border: 1px solid var(--claude-border);
+  background-color: var(--claude-bg);
+  color: var(--claude-text-muted);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+/* --- LIST VIEW (PENDING ITEMS) --- */
+.list-card {
+  background-color: var(--claude-card);
+  border: 1px solid var(--claude-border);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(20,20,19,0.02);
+}
+
+.list-view-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--claude-text);
+  margin-bottom: 0.25rem;
+}
+
+.list-view-subtitle {
+  color: var(--claude-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.pending-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.pending-table th {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--claude-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--claude-border);
+}
+
+.pending-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--claude-border);
+  font-size: 0.92rem;
+  vertical-align: middle;
+}
+
+.pending-table tr:hover td {
+  background-color: var(--claude-bg);
+}
+
+.pending-table .card-id {
+  font-size: 0.8rem;
+}
+
+.badge-status {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.status-funnel { background-color: var(--claude-border); color: var(--claude-text-muted); }
+.status-todo { background-color: var(--claude-orange-light); color: var(--claude-orange); }
+.status-doing { background-color: var(--claude-blue-light); color: var(--claude-blue); }
+
+.no-pending-msg {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--claude-text-muted);
+}
+
+.action-row-btn {
+  background-color: var(--claude-orange);
+  color: white;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.action-row-btn:hover {
+  background-color: oklch(0.53 0.16 34);
+}
+
+/* --- ADD TASK MODAL --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(20, 20, 19, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background-color: var(--claude-bg);
+  border: 1px solid var(--claude-border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: modalSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--claude-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--claude-card);
+}
+
+.modal-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--claude-text);
+}
+
+.close-modal-btn {
+  background: none;
+  border: none;
+  color: var(--claude-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.close-modal-btn:hover {
+  background-color: var(--claude-bg);
+  color: var(--claude-text);
+}
+
+.modal-form {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.modal-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.modal-form label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--claude-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tag-helper {
+  font-size: 0.72rem;
+  font-style: italic;
+  text-transform: none;
+  font-weight: 400;
+}
+
+.modal-form input,
+.modal-form select {
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--claude-border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background-color: var(--claude-card);
+  color: var(--claude-text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.modal-form input:focus,
+.modal-form select:focus {
+  border-color: var(--claude-orange);
+}
+
+.form-group-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  border-top: 1px solid var(--claude-border);
+  padding-top: 1.25rem;
+}
+
+/* Utils */
+.hidden {
+  display: none !important;
+}
+
+/* Responsividade Grid */
+@media (max-width: 992px) {
+  .kanban-board {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .kanban-board {
+    grid-template-columns: 1fr;
+  }
+  
+  .kanban-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .control-section {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .form-group-row {
+    grid-template-columns: 1fr;
+  }
+}
