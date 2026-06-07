@@ -22,8 +22,9 @@
       </div>
       <nav class="nav-links">
         <a href="#products">Products</a>
-        <a href="#about">About</a>
+        <a href="#apps">Apps</a>
         <a href="tictactoe.html" class="nav-tictactoe-link">Tic-Tac-Toe</a>
+        <a href="calculator.html" class="nav-calculator-link">Calculator</a>
         <a href="agent.html" target="_blank" class="nav-agent-link">Agent Dashboard</a>
       </nav>
       <div class="header-actions">
@@ -100,6 +101,38 @@
         <div class="product-info">
           <h3>Aura Charging Dock</h3>
           <span class="price">$49.00</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Apps Section -->
+  <section id="apps" class="products-section">
+    <div class="section-header">
+      <h2>Interactive Utilities</h2>
+      <p>Try our custom tools designed directly for iOS integration and client-side testing.</p>
+    </div>
+    <div class="products-grid" style="justify-content: center; max-width: 800px; margin: 0 auto;">
+      <!-- App 1: Tic-Tac-Toe -->
+      <div class="product-card" onclick="window.location.href='tictactoe.html'" style="cursor: pointer;">
+        <div class="product-image-placeholder">
+          <div class="prod-glow head" style="background-color: oklch(0.65 0.22 300);"></div>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"></path></svg>
+        </div>
+        <div class="product-info">
+          <h3>iOS Tic-Tac-Toe</h3>
+          <span class="price">Play Demo</span>
+        </div>
+      </div>
+      <!-- App 2: Calculator -->
+      <div class="product-card" onclick="window.location.href='calculator.html'" style="cursor: pointer;">
+        <div class="product-image-placeholder">
+          <div class="prod-glow mouse" style="background-color: oklch(0.6 0.22 260);"></div>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="18"></line><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"></path></svg>
+        </div>
+        <div class="product-info">
+          <h3>iPhone Calculator</h3>
+          <span class="price">Open Demo</span>
         </div>
       </div>
     </div>

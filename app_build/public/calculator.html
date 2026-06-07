@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraTech - iPhone Style Calculator</title>
+  <!-- Google Fonts Outfit and Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/calculator.css">
+</head>
+<body>
+
+  <!-- Header Section with Nav -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="logo" style="cursor: pointer;" onclick="window.location.href='index.html'">
+        <span class="logo-dot"></span>
+        <span class="logo-text">AuraTech</span>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#products">Products</a>
+        <a href="tictactoe.html">Tic-Tac-Toe</a>
+        <a href="calculator.html" class="nav-calculator-link active">Calculator</a>
+        <a href="agent.html" target="_blank" class="nav-agent-link">Agent Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="calc-container">
+    <!-- iPhone Device Mockup -->
+    <div class="iphone-mockup">
+      <!-- Notch/Speaker -->
+      <div class="iphone-notch"></div>
+      
+      <!-- Screen Inner -->
+      <div class="iphone-screen">
+        
+        <!-- Calculator App Wrapper -->
+        <div class="calc-app">
+          <!-- Back to Home Link in App -->
+          <div class="app-header">
+            <button class="app-back-btn" onclick="window.location.href='index.html'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+              AuraTech
+            </button>
+            <span class="app-title">Calculator</span>
+          </div>
+
+          <!-- Display -->
+          <div class="calc-display-wrapper">
+            <div id="calcDisplay" class="calc-display">0</div>
+          </div>
+
+          <!-- Teclado / Keypad -->
+          <div class="calc-keypad">
+            <!-- Row 1 -->
+            <button class="calc-btn btn-light-grey" data-action="clear" id="btn-clear">AC</button>
+            <button class="calc-btn btn-light-grey" data-action="toggle-sign">+/-</button>
+            <button class="calc-btn btn-light-grey" data-action="percent">%</button>
+            <button class="calc-btn btn-orange" data-operator="divide">÷</button>
+
+            <!-- Row 2 -->
+            <button class="calc-btn btn-dark-grey" data-number="7">7</button>
+            <button class="calc-btn btn-dark-grey" data-number="8">8</button>
+            <button class="calc-btn btn-dark-grey" data-number="9">9</button>
+            <button class="calc-btn btn-orange" data-operator="multiply">×</button>
+
+            <!-- Row 3 -->
+            <button class="calc-btn btn-dark-grey" data-number="4">4</button>
+            <button class="calc-btn btn-dark-grey" data-number="5">5</button>
+            <button class="calc-btn btn-dark-grey" data-number="6">6</button>
+            <button class="calc-btn btn-orange" data-operator="subtract">−</button>
+
+            <!-- Row 4 -->
+            <button class="calc-btn btn-dark-grey" data-number="1">1</button>
+            <button class="calc-btn btn-dark-grey" data-number="2">2</button>
+            <button class="calc-btn btn-dark-grey" data-number="3">3</button>
+            <button class="calc-btn btn-orange" data-operator="add">+</button>
+
+            <!-- Row 5 -->
+            <button class="calc-btn btn-dark-grey btn-zero" data-number="0">0</button>
+            <button class="calc-btn btn-dark-grey" data-action="decimal">.</button>
+            <button class="calc-btn btn-orange" data-action="calculate">=</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Home Indicator bar -->
+      <div class="iphone-home-bar"></div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/calculator.js"></script>
+</body>
+</html>
