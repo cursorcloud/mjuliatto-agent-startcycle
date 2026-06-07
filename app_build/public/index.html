@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraTech - Minimalist Premium Electronics</title>
+  <!-- Google Fonts Outfit and Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header Section with Nav -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="logo">
+        <span class="logo-dot"></span>
+        <span class="logo-text">AuraTech</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="agent.html" target="_blank" class="nav-agent-link">Agent Dashboard</a>
+      </nav>
+      <div class="header-actions">
+        <button class="cart-btn" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="badge">Introducing Aura Keyboard 2</span>
+      <h1>Experience the <span class="gradient-text">Future of Touch</span></h1>
+      <p>Precision-engineered mechanical keyboards with silent switches, customized oklch backlighting, and a premium sandblasted aluminum case.</p>
+      <div class="cta-group">
+        <button class="btn btn-primary">Pre-order Now</button>
+        <button class="btn btn-secondary">Learn More</button>
+      </div>
+    </div>
+    <div class="hero-image-container">
+      <div class="hero-glow"></div>
+      <div class="keyboard-mock">
+        <!-- Minimal UI Representation of product -->
+        <div class="mock-inner">
+          <div class="keyboard-strip"></div>
+          <div class="keyboard-grid">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="products" class="products-section">
+    <div class="section-header">
+      <h2>Curated Gear</h2>
+      <p>Designed to optimize your creative workflow and workspace aesthetics.</p>
+    </div>
+    <div class="products-grid">
+      <!-- Product 1 -->
+      <div class="product-card">
+        <div class="product-image-placeholder">
+          <div class="prod-glow head"></div>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+        </div>
+        <div class="product-info">
+          <h3>Aura Studio Headphones</h3>
+          <span class="price">$299.00</span>
+        </div>
+      </div>
+      <!-- Product 2 -->
+      <div class="product-card">
+        <div class="product-image-placeholder">
+          <div class="prod-glow mouse"></div>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="7"></rect><path d="M12 2v10"></path></svg>
+        </div>
+        <div class="product-info">
+          <h3>Aura Precision Mouse</h3>
+          <span class="price">$89.00</span>
+        </div>
+      </div>
+      <!-- Product 3 -->
+      <div class="product-card">
+        <div class="product-image-placeholder">
+          <div class="prod-glow charger"></div>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"></rect><path d="M12 7v10M9 10h6M9 14h6"></path></svg>
+        </div>
+        <div class="product-info">
+          <h3>Aura Charging Dock</h3>
+          <span class="price">$49.00</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Support Chat Widget -->
+  <div class="support-widget" id="chatWidget">
+    <!-- Chat Toggle Button (FAB) -->
+    <button class="chat-toggle-btn" id="chatToggleBtn" aria-label="Open support chat" popovertarget="chatWindow">
+      <span class="chat-toggle-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-open"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-close hidden"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </span>
+      <span class="unread-badge hidden" id="unreadBadge">0</span>
+    </button>
+
+    <!-- Chat Window Popover -->
+    <div id="chatWindow" class="chat-window" popover>
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <div class="agent-info-display">
+          <span class="avatar-dot offline" id="agentAvatarDot"></span>
+          <div>
+            <h4 class="chat-title" id="chatTitle">Live Chat Support</h4>
+            <p class="chat-subtitle" id="chatSubtitle">Typically replies in minutes</p>
+          </div>
+        </div>
+        <!-- Native Popover Dismiss using custom action or standard hide -->
+        <button class="chat-header-close" id="chatHeaderClose" aria-label="Close chat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- Onboarding Form Container -->
+      <div class="chat-body onboarding-mode" id="chatBodyOnboarding">
+        <div class="onboarding-welcome">
+          <h3>Chat with Us!</h3>
+          <p>Please enter your details to start a conversation with our customer support team.</p>
+        </div>
+        <form class="onboarding-form" id="onboardingForm" novalidate>
+          <div class="form-group">
+            <label for="customerName">Your Name</label>
+            <input type="text" id="customerName" placeholder="e.g. John Doe" required minlength="2">
+            <span class="error-msg" id="nameError">Please enter your name (at least 2 letters)</span>
+          </div>
+          <div class="form-group">
+            <label for="customerEmail">Email Address</label>
+            <input type="email" id="customerEmail" placeholder="e.g. john@example.com" required>
+            <span class="error-msg" id="emailError">Please enter a valid email address</span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Start Conversation</button>
+        </form>
+      </div>
+
+      <!-- Chat Conversation Container -->
+      <div class="chat-body conversation-mode hidden" id="chatBodyConversation">
+        <div class="message-list" id="messageList">
+          <!-- Messages will be injected here dynamically -->
+        </div>
+        <div class="typing-indicator-wrapper hidden" id="typingIndicator">
+          <span class="typing-indicator-dots">
+            <span></span><span></span><span></span>
+          </span>
+          <span class="typing-text" id="typingIndicatorText">Agent is typing...</span>
+        </div>
+      </div>
+
+      <!-- Chat Footer -->
+      <div class="chat-footer hidden" id="chatFooter">
+        <form id="chatMessageForm">
+          <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off" required>
+          <button type="submit" class="send-message-btn" id="sendMessageBtn" aria-label="Send message">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/client.js"></script>
+</body>
+</html>

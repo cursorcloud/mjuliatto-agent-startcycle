@@ -1,0 +1,9 @@
+# Dependency directories
+app_build/node_modules/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Gemini/Agent configuration or cache directories
+.gemini/
