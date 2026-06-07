@@ -1,12 +1,12 @@
-# Especificação Técnica: Chat de Suporte ao Cliente em Tempo Real
+# Especificação Técnica: Jogo da Velha com Ícones do iPhone e Efeitos Premium
 
-Este documento detalha a arquitetura, requisitos e o protocolo de comunicação para a aplicação de Chat de Suporte ao Cliente em Tempo Real.
+Este documento detalha a arquitetura, requisitos e a implementação para a inclusão de um jogo da velha temático com ícones do iPhone, acessível a partir da página principal da aplicação.
 
 ---
 
 ## 1. Sumário Executivo
 
-A aplicação é um sistema leve de chat de suporte ao cliente projetado para permitir comunicação bidirecional em tempo real entre visitantes do site (clientes) e agentes de suporte. O sistema utiliza WebSockets para garantir entrega instantânea de mensagens e atualizações de status sem a necessidade de requisições periódicas (polling).
+A aplicação existente (Chat de Suporte) será expandida com a adição de um Jogo da Velha interativo. O jogo estará disponível através de um link/botão destacado na página principal (`index.html`). O diferencial deste Jogo da Velha é o uso de imagens/vetores de ícones clássicos do iOS (iPhone) em substituição aos tradicionais "X" e "O". Os jogadores poderão selecionar seus respectivos ícones a partir de uma galeria com 10 opções premium. Ao finalizar o jogo com uma vitória, haverá uma celebração interativa com chuva de confetes na tela.
 
 ---
 
@@ -14,90 +14,94 @@ A aplicação é um sistema leve de chat de suporte ao cliente projetado para pe
 
 ### 2.1 Requisitos Funcionais
 
-#### Fluxo do Cliente (Página Principal):
-- **Formulário de Onboarding:** Antes de iniciar o chat, o cliente insere seu Nome e E-mail. Validações básicas de formulário garantem integridade dos dados.
-- **Widget Flutuante:** O chat reside em um widget flutuante moderno no canto inferior direito da tela, usando a API nativa de popovers do HTML5.
-- **Mensagem de Boas-Vindas:** Uma mensagem automática é enviada pelo sistema assim que o chat é iniciado.
-- **Histórico e Persistência:** A sessão é persistida em `sessionStorage`. Se o cliente recarregar a página, a conversa é restaurada automaticamente com o histórico de mensagens.
-- **Indicador de Digitação:** O cliente visualiza quando o agente está digitando em tempo real.
-- **Contador de Mensagens Não Lidas:** Se o widget estiver fechado e uma nova mensagem do agente chegar, um balão indicador exibe a contagem de não lidas.
+#### Integração na Página Principal (`index.html`):
+- **Link de Acesso:** Um botão/link elegante e estilizado (estilo Apple) posicionado de forma visível na página principal que direciona o usuário para a página do Jogo da Velha (`tictactoe.html`).
 
-#### Fluxo do Agente (Painel de Atendimento):
-- **Fila de Espera:** Novos chats entram em uma fila compartilhada. Todos os agentes conectados visualizam a fila em tempo real.
-- **Reivindicação de Chat (Claim):** Um agente pode assumir o atendimento de um cliente. Isso altera o status da sessão para "active".
-- **Comunicação Direta:** Uma vez reivindicado, o agente e o cliente conversam diretamente.
-- **Encerramento de Conversa:** O agente pode encerrar o atendimento a qualquer momento, o que desabilita novas mensagens no lado do cliente.
-- **Indicador de Digitação:** O agente visualiza quando o cliente está digitando.
+#### Tela do Jogo da Velha (`tictactoe.html`):
+- **Configuração de Jogadores (Onboarding):**
+  - O jogador 1 e o jogador 2 escolhem seus respectivos "ícones" de jogo a partir de uma galeria contendo 10 ícones clássicos do iPhone.
+  - Regra de validação: O jogador 2 não pode escolher o mesmo ícone selecionado pelo jogador 1.
+  - Exibição visual clara dos ícones selecionados por cada jogador.
+- **Galeria de 10 Ícones do iPhone (SVGs inline e responsivos):**
+  1. **Safari** (Bússola azul/vermelha)
+  2. **App Store** (Letra 'A' branca sobre fundo azul)
+  3. **Messages** (Balão verde com contorno branco)
+  4. **Phone** (Telefone branco sobre fundo verde)
+  5. **Mail** (Envelope branco sobre fundo azul)
+  6. **Photos** (Flor de pétalas coloridas)
+  7. **Camera** (Câmera fotográfica médica/cinza)
+  8. **Settings** (Engrenagem cinza escuro)
+  9. **Music** (Nota musical branca sobre fundo rosa/vermelho)
+  10. **Maps** (Indicador de mapa com pin vermelho)
+- **Tabuleiro de Jogo:**
+  - Tabuleiro 3x3 responsivo, com design minimalista, sombras suaves e bordas arredondadas.
+  - Alternância de turnos automática (Jogador 1 vs. Jogador 2).
+  - Exibição de quem é a vez atual de jogar.
+- **Fim de Jogo e Celebração:**
+  - **Vitória:** O tabuleiro destaca a linha, coluna o diagonal vencedora. Uma animação de chuva de confetes (confetti shower) toma conta da tela.
+  - **Empate ("Velha"):** Exibição de mensagem de empate amigável, com opção de reiniciar o jogo mantendo ou alterando os ícones.
+  - **Reinício:** Botão para resetar o jogo mantendo os mesmos ícones ou retornando à tela de seleção de ícones.
 
 ### 2.2 Requisitos Não Funcionais
-- **Baixa Latência:** Comunicação orientada a eventos via WebSockets (`ws` no Node.js).
-- **Sem Banco de Dados (In-Memory):** Armazenamento em memória no servidor para sessões e conexões ativas.
-- **UI/UX Premium:** Design limpo, responsivo, com tipografia moderna (Outfit e Inter) e efeitos visuais fluidos.
+- **Performance Visual:** Animações fluidas (60fps) para as interações e a chuva de confetes.
+- **Acessibilidade:** Elementos interativos possuem estados `:hover` e `:focus` bem definidos, além de suporte a teclado para navegação.
+- **Design Estético Premium (Aesthetics):** Interface seguindo o guia de design da Apple (Neumorfismo/Glassmorphism leve, cantos arredondados padrão iOS, cores vibrantes porém harmônicas e fontes modernas como *SF Pro* ou *Inter*).
 
 ---
 
 ## 3. Arquitetura e Stack Tecnológico
 
-A aplicação adota uma arquitetura cliente-servidor monolítica simples baseada em Node.js.
+O jogo será integrado na estrutura estática da aplicação atual, sem necessidade de banco de dados ou backend dedicado (toda a lógica do jogo roda no lado do cliente).
 
 ### Tecnologias Utilizadas
-- **Backend:** Node.js v18+, Express (serviço de arquivos estáticos), módulo `ws` (WebSockets nativos).
-- **Frontend:** HTML5 Semântico, CSS3 Vanilla (com variáveis de ambiente/CSS Custom Properties), Javascript ES6+.
-- **Protocolo:** JSON sobre WebSockets.
+- **Frontend:** HTML5 Semântico, CSS3 Vanilla (Custom Properties/Variáveis CSS para controle de temas e paleta iOS), JavaScript Vanilla (ES6+).
+- **Biblioteca de Confetes:** Utilização da biblioteca leve e performática `canvas-confetti` carregada via CDN (ou implementada localmente em vanilla canvas caso prefira zero dependências externas).
+- **Ícones:** Vetores SVG embutidos de forma limpa para garantir carregamento instantâneo e alta definição em qualquer tela.
 
-### Estrutura de Arquivos
-```
-app_build/
-├── server.js               # Servidor Express & WebSocket
-├── package.json            # Manifesto e dependências (express, ws)
-├── Dockerfile              # Dockerização da aplicação
-└── public/                 # Recursos estáticos do frontend
-    ├── index.html          # Página institucional AuraTech + Widget do Cliente
-    ├── agent.html          # Painel Administrativo do Agente
-    ├── css/
-    │   └── style.css       # Design global, popover e variáveis CSS
-    └── js/
-        ├── client.js       # Lógica do chat no lado do cliente
-        └── agent.js        # Lógica do chat no lado do agente
+### Estrutura de Arquivos Atualizada
+```diff
+ app_build/
+ ├── server.js
+ ├── package.json
+ ├── Dockerfile
+ └── public/
+     ├── index.html          # Página principal (Adição do link para o Jogo da Velha)
++    ├── tictactoe.html      # Página do Jogo da Velha
+     ├── css/
+     │   ├── style.css
++    │   └── tictactoe.css   # Estilos específicos do jogo da velha e da galeria
+     └── js/
+         ├── client.js
+         ├── agent.js
++        └── tictactoe.js    # Lógica de estados, tabuleiro, seleção de ícones e confete
 ```
 
 ---
 
-## 4. Protocolo de Comunicação WebSocket
+## 4. Fluxo e Gerenciamento de Estado (Client-Side)
 
-Toda a troca de mensagens ocorre em formato JSON, seguindo a estrutura `{ type: string, payload: object }`.
+### Estados da Aplicação:
+1. **`setup`:** Tela de seleção de ícones ativa. Tabuleiro oculto.
+2. **`playing`:** Tabuleiro ativo. Jogadores alternando turnos.
+3. **`finished`:** Tabuleiro bloqueado. Vencedor anunciado, confetes ativos e botão de reset visível.
 
-### Mensagens enviadas pelos Clientes / Agentes para o Servidor
-
-| Tipo (`type`) | Enviado por | Descrição | Payload Exemplo |
-| :--- | :--- | :--- | :--- |
-| `customer_init` | Cliente | Inicia ou reconecta uma sessão de chat | `{ name: "John", email: "john@ex.com", sessionId: "uuid" }` |
-| `agent_init` | Agente | Registra o atendente no painel | `{ agentId: "uuid", name: "Agent Maria" }` |
-| `msg` | Ambos | Envia uma nova mensagem | `{ sessionId: "uuid", text: "Olá", sender: "customer" }` |
-| `typing` | Ambos | Informa se o usuário está digitando | `{ sessionId: "uuid", isTyping: true, sender: "customer" }` |
-| `claim` | Agente | Reivindica uma conversa da fila | `{ sessionId: "uuid", agentId: "uuid", agentName: "Agent Maria" }` |
-| `close` | Agente | Encerra a conversa ativa | `{ sessionId: "uuid" }` |
-
-### Mensagens enviadas pelo Servidor para Clientes / Agentes
-
-| Tipo (`type`) | Destinatário | Descrição | Payload Exemplo |
-| :--- | :--- | :--- | :--- |
-| `session_ready` | Cliente | Confirma o registro e retorna histórico | `{ sessionId: "uuid", status: "queue", messages: [...] }` |
-| `claim_success` | Cliente | Notifica que um agente assumiu a conversa | `{ agentName: "Agent Maria", status: "active", message: {...} }` |
-| `msg` | Ambos | Distribui a mensagem enviada | `{ sessionId: "uuid", message: { id: "uuid", sender: "...", text: "...", timestamp: "..." } }` |
-| `typing` | Ambos | Repassa o estado de digitação para a outra ponta | `{ sessionId: "uuid", sender: "agent", isTyping: true }` |
-| `session_closed` | Cliente | Notifica o fim da sessão de atendimento | `{ status: "closed", message: {...} }` |
-| `init_ok` | Agente | Confirma registro do agente e envia snapshots | `{ agentId: "uuid", sessions: { ... } }` |
-| `sessions_update` | Agente | Envia a lista atualizada de todas as sessões | Lista de sessões ativas e na fila |
-| `new_queue_alert` | Agente | Alerta sobre um novo cliente aguardando atendimento | `{ name: "John", email: "john@ex.com", sessionId: "uuid" }` |
+### Variáveis Globais de Estado (`tictactoe.js`):
+- `currentPlayer`: `1` ou `2`.
+- `player1Icon`: Objeto SVG do ícone escolhido pelo Jogador 1.
+- `player2Icon`: Objeto SVG do ícone escolhido pelo Jogador 2.
+- `boardState`: Array de 9 posições representando o tabuleiro (ex: `[null, null, null, ...]`).
+- `gameActive`: Boolean para travar o tabuleiro após vitória/empate.
 
 ---
 
-## 5. Gerenciamento de Estado
+## 5. Plano de Verificação
 
-### Servidor (In-Memory)
-- **`sessions`:** Dicionário indexado por `sessionId`. Cada sessão possui dados do cliente, status atual (`queue`, `active`, `closed`), histórico de mensagens e o socket ativo (`customerSocket`).
-- **`agents`:** Dicionário indexado por `agentId` mapeando conexões WebSocket de agentes ativos para distribuição de transmissões em broadcast.
-
-### Cliente (Browser)
-- **`sessionStorage`:** Armazena `chat_session_id`, `chat_name` e `chat_email` para persistência de estado durante recarregamento de páginas ou navegação.
+### Testes Manuais
+1. **Navegação:** Clicar no link da página inicial (`index.html`) e verificar se redireciona corretamente para o jogo da velha.
+2. **Seleção de Ícones:**
+   - Testar seleção do Jogador 1 e depois do Jogador 2.
+   - Validar que o Jogador 2 não consegue selecionar o mesmo ícone do Jogador 1 (o ícone correspondente deve ficar desabilitado ou com opacidade reduzida).
+3. **Mecânica do Jogo:**
+   - Jogar uma partida até a vitória e verificar se a chuva de confetes é disparada e a linha vencedora é destacada.
+   - Jogar uma partida até o empate e verificar se a mensagem de "Velha" aparece corretamente.
+   - Clicar em "Reiniciar" e verificar se o tabuleiro é limpo.
